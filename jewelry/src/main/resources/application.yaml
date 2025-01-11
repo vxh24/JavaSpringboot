@@ -18,3 +18,5 @@ spring:
       show-sql: true
     main:
       web-development-type: servlet
+jwt:
+  signerKey: "JbjIfsWnhJFF8+wteeV8jMR6DJeiSfBFXvtEKZF0KQDitA1HsIY+/Xf9VOgV97N6"
