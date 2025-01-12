@@ -4,6 +4,8 @@ import com.example.jewelry.dto.request.UserCreationRequest;
 import com.example.jewelry.dto.request.UserUpdateRequest;
 import com.example.jewelry.dto.response.UserResponse;
 import com.example.jewelry.entity.User;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +22,13 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
-        User user = new User();
+        User.UserBuilder user = User.builder();
 
-        user.setUsername( request.getUsername() );
-        user.setPassword( request.getPassword() );
-        user.setDob( request.getDob() );
+        user.username( request.getUsername() );
+        user.password( request.getPassword() );
+        user.dob( request.getDob() );
 
-        return user;
+        return user.build();
     }
 
     @Override
@@ -39,8 +41,11 @@ public class UserMapperImpl implements UserMapper {
 
         userResponse.id( user.getId() );
         userResponse.username( user.getUsername() );
-        userResponse.password( user.getPassword() );
         userResponse.dob( user.getDob() );
+        Set<String> set = user.getRoles();
+        if ( set != null ) {
+            userResponse.roles( new LinkedHashSet<String>( set ) );
+        }
 
         return userResponse.build();
     }
