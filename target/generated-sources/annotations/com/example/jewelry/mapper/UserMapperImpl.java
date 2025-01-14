@@ -3,6 +3,7 @@ package com.example.jewelry.mapper;
 import com.example.jewelry.dto.request.UserCreationRequest;
 import com.example.jewelry.dto.request.UserUpdateRequest;
 import com.example.jewelry.dto.response.UserResponse;
+import com.example.jewelry.entity.Role;
 import com.example.jewelry.entity.User;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -42,9 +43,9 @@ public class UserMapperImpl implements UserMapper {
         userResponse.id( user.getId() );
         userResponse.username( user.getUsername() );
         userResponse.dob( user.getDob() );
-        Set<String> set = user.getRoles();
+        Set<Role> set = user.getRoles();
         if ( set != null ) {
-            userResponse.roles( new LinkedHashSet<String>( set ) );
+            userResponse.roles( new LinkedHashSet<Role>( set ) );
         }
 
         return userResponse.build();

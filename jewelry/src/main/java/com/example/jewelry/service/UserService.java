@@ -8,6 +8,7 @@ import com.example.jewelry.enums.Role;
 import com.example.jewelry.exception.AppException;
 import com.example.jewelry.exception.ErrorCode;
 import com.example.jewelry.mapper.UserMapper;
+import com.example.jewelry.repository.RoleRepository;
 import com.example.jewelry.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,19 +32,21 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
     public User createUser(UserCreationRequest request){
         if(userRepository.existsByUsername(request.getUsername())){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         User user =userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-        user.setRoles(roles);
+//        HashSet<com.example.jewelry.entity.Role> roles = new HashSet<>();
+//        roles.add(Role.USER.name());
+//        user.setRoles(roles);
         return userRepository.save(user);
 
     }
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ABC3_DATA')")
     public List<UserResponse> getUsers(){
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
@@ -59,9 +62,12 @@ public class UserService {
     }
     public  UserResponse updateUser(String userId, UserUpdateRequest request){
         User user = userRepository.findById(userId)
-                .orElseThrow(()-> new RuntimeException("User not exits"));
+                .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user,request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
         return userMapper.toUserResponse(userRepository.save(user));
 
     }

@@ -3,17 +3,15 @@ package com.example.jewelry.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateRequest {
-    String username;
-    String password;
-    LocalDate dob;
-    List<String> roles;
+public class RoleRequest {
+    String name;
+    String description;
+    Set<String> permissions;
 }
