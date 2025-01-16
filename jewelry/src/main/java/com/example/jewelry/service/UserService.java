@@ -4,7 +4,6 @@ import com.example.jewelry.dto.request.UserCreationRequest;
 import com.example.jewelry.dto.request.UserUpdateRequest;
 import com.example.jewelry.dto.response.UserResponse;
 import com.example.jewelry.entity.User;
-import com.example.jewelry.enums.Role;
 import com.example.jewelry.exception.AppException;
 import com.example.jewelry.exception.ErrorCode;
 import com.example.jewelry.mapper.UserMapper;
