@@ -1,8 +1,6 @@
 package com.example.jewelry.controller;
 
-import com.example.jewelry.dto.request.ApiResponse;
-import com.example.jewelry.dto.request.AuthenticationRequest;
-import com.example.jewelry.dto.request.IntrospectRequest;
+import com.example.jewelry.dto.request.*;
 import com.example.jewelry.dto.response.AuthenticationResponse;
 import com.example.jewelry.dto.response.IntrospectResponse;
 import com.example.jewelry.service.AuthenticationService;
@@ -34,6 +32,19 @@ public class AuthenticationController {
     ApiResponse<IntrospectResponse> authenticate(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
         var result= authenticationService.introspectResponse(request);
         return ApiResponse.<IntrospectResponse>builder()
+                .result(result)
+                .build();
+    }
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .build();
+    }
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshTokenRequest request) throws ParseException, JOSEException {
+        var result= authenticationService.refresh(request);
+        return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
                 .build();
     }

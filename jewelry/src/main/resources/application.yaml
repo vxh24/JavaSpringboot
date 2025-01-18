@@ -20,3 +20,5 @@ spring:
       web-development-type: servlet
 jwt:
   signerKey: "JbjIfsWnhJFF8+wteeV8jMR6DJeiSfBFXvtEKZF0KQDitA1HsIY+/Xf9VOgV97N6"
+  valid-duration: 3600 # in second
+  refreshable-duration: 360000 # in second
